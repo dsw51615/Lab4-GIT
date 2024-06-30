@@ -3,13 +3,13 @@
 show_help(){
     echo "Dostepne opcje:"
     echo "--date	-d Pokaz dzisiejsza date"
-    echo "--logs [N]	-l Utworz plik N log (domyslnie 100)"
+    echo "--logs [N]	-l Stworz plik N log (domyslnie: 100)"
     echo "--help	-h Pokaz pomoc"
 }
 
 create_logs(){
     num_files=${1:-100}
-    for i in$(seq 1 $num_files); do
+    for i in $(deq 1 $num_files); do
 	echo -e "Nazwa pliku: log$i.txt\nScript name: $0\nDate: $(date)" > log$i.txt
     done
 }
@@ -25,6 +25,6 @@ case "$1" in
 	show_help
 	;;
     *)
-	echo "Niedostepna opcja. Uzyj --help lub -h w celu uzyskania pomocy."
+	echo "Bledna opcja. Uzyj --help lub -h w celu uzyskania pomocy."
 	;;
 esac
