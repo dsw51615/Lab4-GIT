@@ -2,36 +2,45 @@
 
 show_help(){
     echo "Dostepne opcje"
-    echo "--date -d    Pokaz aktualna date"
-    echo "--logs -l [N]  Stworz plik N log (domyslnie: 100)"
+    echo "--date -d    Pokaz dzisiejsza date"
+    echo "--logs -l [N]    Stworz plik N log (domyslnie: 100)"
     echo "--help -h    Pokaz pomoc"
-    echo "--init       Kompiuj repozytorium do bierzacego katalogu"
+    echo "--init       Kolnuj repozutorium do bierzacego katalogu"
+    echo "--error -e [N]   Stworz plik N error (domyslnie: 100)"
 }
 
 create_logs(){
     num_files=${1:-100}
+    for i in $(deq 1 $num_files); do
+	echo -e "File name: log$i.txt\nScript name: $0\nDate: $(date)" > log$i.txt
+    done
+}
+
+create_errors(){
+    num_files=${1:-100}
+    mkdir -p error
     for i in $(seq 1 $num_files); do
-	echo -e "Nazwa pliku: log$i.txt\nScript name: $0\nDate: $(date)" > log$i.txt
+	echo -e "File name: error/error$i.txt\nScript name: $0\nDate: $(date)" > error
     done
 }
 
 init_repo(){
     git clone https://github.com/dsw51615/Lab4-GIT.git
-    export PATH=$PATH:$(pwd)/Lab4-GIT
+    ewxport PATH=$PATH:$(pwd)/Lab4-GIT
 }
 
 case "$1" in
     --date|-d)
 	date
 	;;
-    --logs|-l)
+    --logs|-1)
 	create_logs "$2"
 	;;
     --init)
 	init_repo
 	;;
-    --help|-h)
-	show_help
+    --error|-e)
+	create_errors "$2"
 	;;
     *)
 	echo "Bledna opcja. Uzyj --help lub -h w celu uzyskania pomocy."
