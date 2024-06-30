@@ -1,10 +1,11 @@
 #!/bin/bash
 
 show_help(){
-    echo "Dostepne opcje:"
-    echo "--date -d Pokaz dzisiejsza date"
-    echo "--logs -l [N] Stworz plik N log (domyslnie: 100)"
-    echo "--help -h Pokaz pomoc"
+    echo "Dostepne opcje"
+    echo "--date -d    Pokaz aktualna date"
+    echo "--logs -l [N]  Stworz plik N log (domyslnie: 100)"
+    echo "--help -h    Pokaz pomoc"
+    echo "--init       Kompiuj repozytorium do bierzacego katalogu"
 }
 
 create_logs(){
@@ -14,12 +15,20 @@ create_logs(){
     done
 }
 
+init_repo(){
+    git clone https://github.com/dsw51615/Lab4-GIT.git
+    export PATH=$PATH:$(pwd)/Lab4-GIT
+}
+
 case "$1" in
     --date|-d)
 	date
 	;;
     --logs|-l)
 	create_logs "$2"
+	;;
+    --init)
+	init_repo
 	;;
     --help|-h)
 	show_help
